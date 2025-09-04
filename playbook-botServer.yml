@@ -1,0 +1,81 @@
+---
+- name:  Install tmux
+  hosts: telegramBotUbuntuserver
+  become: yes
+#  become_user: root
+#  become_method: sudo
+  vars:
+    source_folder: ./DevopsBot
+    destin_folder: ~/
+
+  tasks:
+  - name: Clone a github repository #Клонируем проект с Гитхаб############
+    git:
+      repo: https://github.com/Serge-Tar/DevopsBot.git
+      dest: ~/
+      clone: yes
+      update: yes
+
+#Устанавливаем tmux ######################################################
+  - block: #========= Install for "Debian"=========
+
+     - name: Install tmux
+       apt:
+         name: tmux
+         state: present
+
+     - name: Start tmux
+       service: name=tmux state=started enabled=yes
+
+    when: ansible_os_family == "Debian"
+
+  - block: #========= Install for "RedHat"=========
+
+     - name: Install tmux
+       yum:
+         name: tmux
+         state: present
+         update_cache: yes
+
+     - name: Start tmux
+       service: name=tmux state=started enabled=yes
+
+    when: ansible_os_family == "RedHat"
+
+#Копируем файлы на сервер и перезапускаем службы##############################
+
+#  - name: Copy My HomePage files to servers
+#    copy:
+#      src: "{{ item }}"
+#      dest: "{{ destin_folder }}"
+#      mode: 0555
+#    with_fileglob: "{{ source_folder }}/*.*"   #скопировать всё из этого пути
+#    notify:
+#      - Restart Apache RedHat
+#      - Restart Apache Debian
+
+#  handlers:
+#  - name: Restart Apache RedHat
+#    service:
+#      name: httpd
+#      state: restarted
+#    when: ansible_os_family == "RedHat"
+
+#  - name: Restart Apache Debian
+#    service:
+#      name: apache2
+#      state: restarted
+#    when: ansible_os_family == "Debian"
+
+
+# instaliruet webserver Apache na host i zapuskaet ego i perezapuskaet
+# ansible-playbook playbook2-install-Apache.yml -b -k -K
+
+#=========== В этом случае Ansible рекурсивно скопирует
+#=========== содержимое директории на управляющем компьютере
+#=========== в соответствующую директорию на удалённом:
+#- name: Copy directory to remote host
+#  copy:
+#    src: /home/ubuntu/local/directory/
+#    dest: /home/ubuntu/remote/directory/
+#    remote_src: yes

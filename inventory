@@ -1,0 +1,26 @@
+JenkinsUbuntuserver       ansible_host=192.168.1.23
+#
+telegramBotUbuntuserver   ansible_host=192.168.1.24
+#
+AnsibleUbuntuserver       ansible_host=192.168.1.25
+
+#target5   ansible_host=192.168.0.19    ansible_user=admin0          ansible_ssh_pass=qwe
+
+
+[DevopsBotVM]
+JenkinsUbuntuserver
+telegramBotUbuntuserver
+AnsibleUbuntuserver
+
+
+[DevopsBotVM:vars] #перенесли переменные в файл ~/ansible/group_vars/DevopsBotVM.yml
+#ansible_user=admin0
+#ansible_ssh_pass=qwe
+
+#[ALL_servers:children]
+#training
+#DevopsBotVM
+
+
+# komanda ansible dlia ping ispolzuia file inventory
+# ansible target1 -m ping -i inventory

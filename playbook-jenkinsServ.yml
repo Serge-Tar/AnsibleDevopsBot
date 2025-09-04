@@ -1,0 +1,27 @@
+---
+#(https://www.ansiblepilot.com/articles/automating-jenkins-installation-with-ansible/)
+- name: Install and start Jenkins
+  hosts: JenkinsUbuntuserver
+  become: true
+  tasks:
+  - name: Install Java
+    ansible.builtin.apt:
+          name: jdk-21-headless
+          state: present
+
+  - name: Add Jenkins repository
+    ansible.builtin.apt_repository:
+          repo: deb https://pkg.jenkins.io/debian-stable binary/
+          state: present
+
+  - name: Install Jenkins
+    ansible.builtin.apt:
+          name: jenkins
+          state: present
+          update_cache: yes
+
+  - name: Start and enable Jenkins
+    ansible.builtin.service:
+          name: jenkins
+          state: started
+          enabled: true

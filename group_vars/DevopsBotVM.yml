@@ -1,0 +1,3 @@
+---
+ansible_user: admin0
+ansible_ssh_pass: qwe
