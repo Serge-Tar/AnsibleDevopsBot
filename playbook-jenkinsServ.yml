@@ -4,15 +4,21 @@
   hosts: JenkinsUbuntuserver
   become: true
   tasks:
-  - name: Install Java
+  - name: Install Java, Needed for Ansible to run on server
     ansible.builtin.apt:
-          name: jdk-21-headless
+          name: openjdk-21-jre-headless
           state: present
 
-  - name: Add Jenkins repository
+  - name: Tap into Jenkins repo for apt - Step 1
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+      state: present
+
+  - name: Add Jenkins repository for apt - Step 2
     ansible.builtin.apt_repository:
           repo: deb https://pkg.jenkins.io/debian-stable binary/
           state: present
+          update_cache: yes
 
   - name: Install Jenkins
     ansible.builtin.apt:
