@@ -3,14 +3,17 @@ JenkinsUbuntuserver       ansible_host=192.168.1.23
 telegramBotUbuntuserver   ansible_host=192.168.1.24
 #
 AnsibleUbuntuserver       ansible_host=192.168.1.25
-
-#target5   ansible_host=192.168.0.19    ansible_user=admin0          ansible_ssh_pass=qwe
+#
+trainingUbuntuserver      ansible_host=192.168.1.22    ansible_user=admin0          ansible_ssh_pass=qwe
 
 
 [DevopsBotVM]
 JenkinsUbuntuserver
 telegramBotUbuntuserver
 AnsibleUbuntuserver
+
+[training]
+trainingUbuntuserver
 
 
 [DevopsBotVM:vars] #перенесли переменные в файл ~/ansible/group_vars/DevopsBotVM.yml

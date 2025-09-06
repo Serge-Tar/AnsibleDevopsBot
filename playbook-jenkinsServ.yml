@@ -1,7 +1,7 @@
 ---
 #(https://www.ansiblepilot.com/articles/automating-jenkins-installation-with-ansible/)
 - name: Install and start Jenkins
-  hosts: JenkinsUbuntuserver
+  hosts: JenkinsUbuntuserver, training
   become: true
   tasks:
   - name: Install Java, Needed for Ansible to run on server
