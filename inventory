@@ -27,3 +27,7 @@ trainingUbuntuserver
 
 # komanda ansible dlia ping ispolzuia file inventory
 # ansible target1 -m ping -i inventory
+
+#запуск с вводом пароля для sudo
+#ansible-playbook playbook-jenkinsServ.yml -e "ansible_become_password=qwe"
+
