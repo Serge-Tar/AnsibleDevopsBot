@@ -1,21 +1,22 @@
 ---
-- name:  Install tmux
-  hosts: telegramBotUbuntuserver
+- name:  Clone a github repository and Install tmux
+  hosts: telegramBotUbuntuserver, training
   become: yes
 #  become_user: root
 #  become_method: sudo
-  vars:
-    source_folder: ./DevopsBot
-    destin_folder: ~/
+#  vars:
+#    source_folder: ./DevopsBot
+#    destin_folder: ~/
 
   tasks:
   - name: Clone a github repository #Клонируем проект с Гитхаб############
     git:
       repo: https://github.com/Serge-Tar/DevopsBot.git
-      dest: ~/
+      dest: /home/admin0/DevopsBot
       clone: yes
       update: yes
-
+  - debug:
+      msg: "Клонировали DevopsBot из GitHub"
 #Устанавливаем tmux ######################################################
   - block: #========= Install for "Debian"=========
 
@@ -25,7 +26,10 @@
          state: present
 
      - name: Start tmux
-       service: name=tmux state=started enabled=yes
+       service:
+         name: tmux
+         state: started
+         enabled: yes
 
     when: ansible_os_family == "Debian"
 
